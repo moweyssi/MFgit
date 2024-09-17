@@ -77,8 +77,6 @@ def get_data():
     adm_id = np.load(BytesIO(adm_id_response.content), allow_pickle=True)
     return embedding, adm_id
 embedding, adm_id = get_data()
-# Set page configuration
-st.set_page_config(page_title="Dynamic DataFrame App", page_icon="📊", layout="centered")
 
 # Title of the app
 st.title("Dynamic DataFrame with Editable Column")
