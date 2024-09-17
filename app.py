@@ -52,7 +52,18 @@ def get_address(address_string):
     query_vector = np.array([nazev_obce, nazev_casti_obce, nazev_ulice,cislo_domovni,cislo_orientacni,psc])
     return query_vector, text_address
 
-def get_match(address,embedding):
+
+@st.cache_data
+def get_data():
+    # Fetch and load the file into memory
+    embed_response = requests.get('https://raw.githubusercontent.com/moweyssi/MFgit/main/embedding.npy')
+    embedding = np.load(BytesIO(embed_response.content), allow_pickle=True)
+
+    adm_id_response = requests.get('https://raw.githubusercontent.com/moweyssi/MFgit/main/ruian_kod.npy')
+    adm_id = np.load(BytesIO(adm_id_response.content), allow_pickle=True)
+    return embedding, adm_id
+embedding, adm_id = get_data()
+def get_match(address):
     query_vector, text_address = get_address(address)
     string_matches = np.array([
     embedding[:,0]==query_vector[0],
@@ -67,22 +78,11 @@ def get_match(address,embedding):
     print(str(int((100*closest_match.max()/6)))+ "% match")
     return closest_match.argmax(), text_address
 
-@st.cache_data
-def get_data():
-    # Fetch and load the file into memory
-    embed_response = requests.get('https://raw.githubusercontent.com/moweyssi/MFgit/main/embedding.npy')
-    embedding = np.load(BytesIO(embed_response.content), allow_pickle=True)
-
-    adm_id_response = requests.get('https://raw.githubusercontent.com/moweyssi/MFgit/main/ruian_kod.npy')
-    adm_id = np.load(BytesIO(adm_id_response.content), allow_pickle=True)
-    return embedding, adm_id
-embedding, adm_id = get_data()
-
 # Title of the app
 st.title("Dynamic DataFrame with Editable Column")
 
 # Slider to select the number of rows
-num_rows = st.number_input('Set the number of rows', min_value=1, max_value=100, value=5, step=1)
+num_rows = st.number_input('Set the number of rows', min_value=1, max_value=100, value=1, step=1)
 # Create an empty DataFrame with three columns and the number of rows selected
 df = pd.DataFrame({
     'Adresa': [None] * num_rows
@@ -95,6 +95,6 @@ result_df = pd.DataFrame({
     'Kod Adresniho Mista RUIAN': editable_df['Adresa'],
     'Mapy CZ Adresa': editable_df['Adresa']
 })
-result_df['Kod Adresniho Mista RUIAN'], result_df['Mapy CZ Adresa'] = result_df['Adresa'].apply(get_match(embedding=embedding))
+result_df['Kod Adresniho Mista RUIAN'], result_df['Mapy CZ Adresa'] = result_df['Adresa'].apply(get_match)
 
 show_result = st.dataframe(result_df,use_container_width =True)
