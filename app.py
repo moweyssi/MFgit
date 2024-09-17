@@ -18,4 +18,5 @@ df = pd.DataFrame({
 })
 
 # Display editable DataFrame
-edited_df = st.data_editor(df, num_rows="dynamic", key="editable_df")
+editable_df = st.data_editor(df, num_rows="dynamic", key="editable_df")
+editable_df['Kod Adresniho Mista RUIAN'] = editable_df['Adresa']
