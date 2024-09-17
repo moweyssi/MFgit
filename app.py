@@ -64,19 +64,21 @@ def get_data():
     return embedding, adm_id
 embedding, adm_id = get_data()
 def get_match(address):
-    query_vector, text_address = get_address(address)
-    string_matches = np.array([
-    embedding[:,0]==query_vector[0],
-    embedding[:,1]==query_vector[1],
-    embedding[:,2]==query_vector[2],
-    embedding[:,3]==int(query_vector[3]),
-    embedding[:,4]==int(query_vector[4]),
-    embedding[:,5]==int(query_vector[5])]).T
+    if address==np.nan:
+        return np.nan
+    else:
+        query_vector, text_address = get_address(address)
+        string_matches = np.array([
+        embedding[:,0]==query_vector[0],
+        embedding[:,1]==query_vector[1],
+        embedding[:,2]==query_vector[2],
+        embedding[:,3]==int(query_vector[3]),
+        embedding[:,4]==int(query_vector[4]),
+        embedding[:,5]==int(query_vector[5])]).T
 
-    closest_match = string_matches.sum(axis=1)
+        closest_match = string_matches.sum(axis=1)
 
-    print(str(int((100*closest_match.max()/6)))+ "% match")
-    return closest_match.argmax(), text_address
+        return closest_match.argmax(), text_address
 
 # Title of the app
 st.title("Dynamic DataFrame with Editable Column")
