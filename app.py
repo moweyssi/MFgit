@@ -65,8 +65,8 @@ def get_match(address,embedding):
     print(str(int((100*closest_match.max()/6)))+ "% match")
     return closest_match.argmax(), text_address
 
-embedding = np.load('*/embedding.npy',allow_pickle=True)
-adm_id = np.load('*/ruian_kod.npy',allow_pickle=True)
+embedding = np.load('embedding.npy',allow_pickle=True)
+adm_id = np.load('ruian_kod.npy',allow_pickle=True)
 
 
 # Set page configuration
