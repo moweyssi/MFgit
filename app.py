@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import requests
 import numpy as np
+from io import BytesIO
+
 
 api_key = st.text_input('Mapy.cz API klic:')
 
@@ -65,10 +67,16 @@ def get_match(address,embedding):
     print(str(int((100*closest_match.max()/6)))+ "% match")
     return closest_match.argmax(), text_address
 
-embedding = np.load('embedding.npy',allow_pickle=True)
-adm_id = np.load('ruian_kod.npy',allow_pickle=True)
+@st.cache_data
+def get_data():
+    # Fetch and load the file into memory
+    embed_response = requests.get('https://raw.githubusercontent.com/moweyssi/MFgit/main/embedding.npy')
+    embedding = np.load(BytesIO(embed_response.content), allow_pickle=True)
 
-
+    adm_id_response = requests.get('https://raw.githubusercontent.com/moweyssi/MFgit/main/ruian_kod.npy')
+    adm_id = np.load(BytesIO(adm_id_response.content), allow_pickle=True)
+    return embedding, adm_id
+embedding, adm_id = get_data()
 # Set page configuration
 st.set_page_config(page_title="Dynamic DataFrame App", page_icon="📊", layout="centered")
 
