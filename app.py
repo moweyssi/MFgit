@@ -23,4 +23,4 @@ result_df = pd.DataFrame({
     'Mapy CZ Adresa': editable_df['Adresa']+'hahaha'
 })
 
-show_result = st.dataframe(result_df)
+show_result = st.dataframe(result_df,use_container_width =True)
