@@ -141,4 +141,9 @@ if st.button("go!",use_container_width=True):
             'Mapy CZ Adresa': mapycz_adresa,
             'RUIAN Link':ruian_link
         })
-        show_result = st.dataframe(result_df, use_container_width=True)
+        show_result = st.dataframe(result_df, use_container_width=True,column_config={
+        "RUIAN Link": st.column_config.LinkColumn(
+            "RUIAN Link",
+            display_text=r"RUIAN"
+        ))
+        
