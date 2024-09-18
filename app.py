@@ -27,7 +27,7 @@ def geocode_address(api_key, query, lang='cs', limit=5):
 def get_address(address_string):
     response = geocode_address(api_key,address_string)
     if response['items']==[]:
-        return None, None
+        return None
     else:
         text_address = response['items'][0]['name']
         regional_address = response['items'][0]['regionalStructure'][0]['name'].split('/')
@@ -59,8 +59,8 @@ def get_data():
     return embedding, adm_id
 embedding, adm_id = get_data()
 def get_match(address):
-    if address==np.nan:
-        return np.nan
+    if address==None:
+        return None,None
     else:
         query_vector, text_address = get_address(address)
         string_matches = np.array([
