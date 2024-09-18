@@ -27,7 +27,7 @@ def geocode_address(api_key, query, lang='cs', limit=5):
 def get_address(address_string):
     response = geocode_address(api_key,address_string)
     st.text(response)
-    text_address = "gugu gaga"#response['items'][0]['name']
+    text_address = response['items'][0]['name']
     regional_address = response['items'][0]['regionalStructure'][0]['name'].split('/')
     # Check if the split resulted in exactly two parts
     if len(regional_address) == 2:
@@ -93,16 +93,19 @@ df = pd.DataFrame({
 editable_df = st.data_editor(df, num_rows="dynamic", key="editable_df",use_container_width =True)
 
 if st.button("go!"):
-    kod_adm = [] 
-    mapycz_adresa = []
-    for i in editable_df['Adresa']:
-        kod, loc = get_match(i)
-        kod_adm.append(kod)
-        mapycz_adresa.append(loc)
-    # Display editable DataFrame
-    result_df = pd.DataFrame({
-        'Adresa': editable_df['Adresa'],
-        'Kod Adresniho Mista RUIAN': kod_adm,
-        'Mapy CZ Adresa': mapycz_adresa
-    })
-    show_result = st.dataframe(result_df,use_container_width =True)
+    if api_key==None:
+        st.warning("You must provide an API key!")
+    else:
+        kod_adm = [] 
+        mapycz_adresa = []
+        for i in editable_df['Adresa']:
+            kod, loc = get_match(i)
+            kod_adm.append(kod)
+            mapycz_adresa.append(loc)
+        # Display editable DataFrame
+        result_df = pd.DataFrame({
+            'Adresa': editable_df['Adresa'],
+            'Kod Adresniho Mista RUIAN': kod_adm,
+            'Mapy CZ Adresa': mapycz_adresa
+        })
+        show_result = st.dataframe(result_df,use_container_width =True)
