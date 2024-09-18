@@ -87,7 +87,7 @@ def get_match(address):
     if query[0][5]==0:
         return None,None
     else:
-        st.text(query[0][5]==0)
+        st.text(query[0][5])
         query_vector, text_address = query
         string_matches = np.array([
         embedding[:,0]==query_vector[0],
