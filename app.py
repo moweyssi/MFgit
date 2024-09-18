@@ -92,10 +92,12 @@ if st.button("go!"):
     else:
         kod_adm = [] 
         mapycz_adresa = []
-        for i in editable_df['Adresa']:
-            kod, loc = get_match(i)
+        my_bar = st.progress(0, text='Working')
+        for i in range(len(editable_df['Adresa'])):
+            kod, loc = get_match(editable_df['Adresa'][i])
             kod_adm.append(kod)
             mapycz_adresa.append(loc)
+            my_bar.progress(i + 1, text='Working')
         # Display editable DataFrame
         result_df = pd.DataFrame({
             'Adresa': editable_df['Adresa'],
