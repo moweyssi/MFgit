@@ -6,7 +6,7 @@ from io import BytesIO
 
 
 api_key = st.text_input('Mapy.cz API klic:')
-
+st.text('Info zde:','https://developer.mapy.cz/account/projects')
 def geocode_address(api_key, query, lang='cs', limit=5):
     url = "https://api.mapy.cz/v1/geocode"
     params = {
