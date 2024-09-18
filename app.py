@@ -26,7 +26,6 @@ def geocode_address(api_key, query, lang='cs', limit=5):
     
 def get_address(address_string):
     response = geocode_address(api_key, address_string)
-    st.text(response)
 
     if not response['items']:
         return None
@@ -87,7 +86,6 @@ def get_match(address):
     if extract_int(query[0][5])==0:
         return None,None
     else:
-        st.text(query[0][5])
         query_vector, text_address = query
         string_matches = np.array([
         embedding[:,0]==query_vector[0],
