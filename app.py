@@ -43,7 +43,7 @@ def get_address(address_string):
         nazev_obce = response['items'][0]['regionalStructure'][3]['name']
         psc = response['items'][0]['zip'].replace(' ','')
 
-        text_address = ', '.join([nazev_obce,nazev_casti_obce,nazev_ulice,regional_address,psc])
+        text_address = ', '.join([nazev_obce,nazev_casti_obce,nazev_ulice,'/'.join(regional_address),psc])
         query_vector = np.array([nazev_obce, nazev_casti_obce, nazev_ulice,cislo_domovni,cislo_orientacni,psc])
         return query_vector, text_address
 
