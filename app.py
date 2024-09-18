@@ -26,32 +26,26 @@ def geocode_address(api_key, query, lang='cs', limit=5):
     
 def get_address(address_string):
     response = geocode_address(api_key,address_string)
-    st.text(response)
-    text_address = response['items'][0]['name']
-    regional_address = response['items'][0]['regionalStructure'][0]['name'].split('/')
-    # Check if the split resulted in exactly two parts
-    if len(regional_address) == 2:
-        cislo_domovni = regional_address[0]
-        cislo_orientacni = regional_address[1]
+    if response['items']==[]:
+        return None, None
     else:
-        cislo_domovni = regional_address[0]
-        cislo_orientacni = -1
+        text_address = response['items'][0]['name']
+        regional_address = response['items'][0]['regionalStructure'][0]['name'].split('/')
+        # Check if the split resulted in exactly two parts
+        if len(regional_address) == 2:
+            cislo_domovni = regional_address[0]
+            cislo_orientacni = regional_address[1]
+        else:
+            cislo_domovni = regional_address[0]
+            cislo_orientacni = -1
+        
+        nazev_ulice =   response['items'][0]['regionalStructure'][1]['name']
+        nazev_casti_obce = response['items'][0]['regionalStructure'][2]['name']
+        nazev_obce = response['items'][0]['regionalStructure'][3]['name']
+        psc = response['items'][0]['zip'].replace(' ','')
 
-
-    nazev_ulice =   response['items'][0]['regionalStructure'][1]['name']
-    nazev_casti_obce = response['items'][0]['regionalStructure'][2]['name']
-    nazev_obce = response['items'][0]['regionalStructure'][3]['name']
-    psc = response['items'][0]['zip'].replace(' ','')
-
-
-    print("nazev_obce: ",nazev_obce)
-    print("nazev_casti_obce: ",nazev_casti_obce)
-    print("nazev_ulice: ",nazev_ulice)
-    print("cislo_domovni: ",cislo_domovni)
-    print("cislo_orientacni: ",cislo_orientacni)
-    print("psc: ",psc)
-    query_vector = np.array([nazev_obce, nazev_casti_obce, nazev_ulice,cislo_domovni,cislo_orientacni,psc])
-    return query_vector, text_address
+        query_vector = np.array([nazev_obce, nazev_casti_obce, nazev_ulice,cislo_domovni,cislo_orientacni,psc])
+        return query_vector, text_address
 
 
 @st.cache_data
