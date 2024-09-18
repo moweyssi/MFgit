@@ -26,6 +26,7 @@ def geocode_address(api_key, query, lang='cs', limit=5):
     
 def get_address(address_string):
     response = geocode_address(api_key,address_string)
+    st.text(response)
     if response['items']==[]:
         return None
     else:
