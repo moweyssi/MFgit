@@ -40,7 +40,7 @@ def get_address(address_string):
     address_components = {elem['type']: elem['name'] for elem in regional_structure}
 
     # Try to find the elements based on their types
-    cislo_domovni, cislo_orientacni = -1, -1
+    cislo_domovni, cislo_orientacni = 0, 0
     if 'regional.address' in address_components:
         address_parts = address_components['regional.address'].split('/')
         cislo_domovni = address_parts[0]
@@ -51,11 +51,11 @@ def get_address(address_string):
     nazev_casti_obce = address_components.get('regional.municipality_part', '')
     nazev_obce = address_components.get('regional.municipality', '')
 
-    # Handle missing zip code (if it exists in the item)
-    psc = first_item.get('zip', '').replace(' ', '-1')
+    # Handle missing zip code (return 0 if missing)
+    psc = first_item.get('zip', '0').replace(' ', '') or '0'
 
     # Construct the text address, only including available components
-    text_address = ', '.join(filter(None, [nazev_ulice, '/'.join([str(cislo_domovni), str(cislo_orientacni)]), nazev_obce, nazev_casti_obce, psc]))
+    text_address = ', '.join(filter(None, [nazev_ulice, '/'.join([cislo_domovni, str(cislo_orientacni)]), nazev_obce, nazev_casti_obce, psc]))
 
     # Construct the query vector
     query_vector = np.array([nazev_obce, nazev_casti_obce, nazev_ulice, cislo_domovni, cislo_orientacni, psc])
@@ -82,7 +82,6 @@ def extract_int(s):
     return int(numeric_part)
 def get_match(address):
     query = get_address(address)
-    st.text(query)
     if query==None:
         return None,None
     else:
