@@ -28,7 +28,7 @@ def get_address(address_string):
     response = geocode_address(api_key,address_string)
     st.text(response)
     if response['items']==[]:
-        return None
+        return (None,None)
     else:
         regional_address = response['items'][0]['regionalStructure'][0]['name'].split('/')
         # Check if the split resulted in exactly two parts
@@ -65,10 +65,10 @@ def extract_int(s):
     # Convert the numeric part to an integer
     return int(numeric_part)
 def get_match(address):
-    if address==None:
+    query_vector, text_address = get_address(address)
+    if (query_vector, text_address)==(None,None):
         return None,None
     else:
-        query_vector, text_address = get_address(address)
         string_matches = np.array([
         embedding[:,0]==query_vector[0],
         embedding[:,1]==query_vector[1],
