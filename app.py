@@ -84,7 +84,7 @@ def get_match(address):
     query = get_address(address)
     if query==None:
         return None,None
-    if query[0][5]==0:
+    if extract_int(query[0][5])==0:
         return None,None
     else:
         st.text(query[0][5])
