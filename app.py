@@ -58,6 +58,12 @@ def get_data():
     adm_id = np.load(BytesIO(adm_id_response.content), allow_pickle=True)
     return embedding, adm_id
 embedding, adm_id = get_data()
+def extract_int(s):
+    # Extract only the numeric characters from the string
+    numeric_part = ''.join(filter(str.isdigit, s))
+    
+    # Convert the numeric part to an integer
+    return int(numeric_part)
 def get_match(address):
     if address==None:
         return None,None
@@ -67,9 +73,9 @@ def get_match(address):
         embedding[:,0]==query_vector[0],
         embedding[:,1]==query_vector[1],
         embedding[:,2]==query_vector[2],
-        embedding[:,3]==int(query_vector[3]),
-        embedding[:,4]==int(query_vector[4]),
-        embedding[:,5]==int(query_vector[5])]).T
+        embedding[:,3]==extract_int(query_vector[3]),
+        embedding[:,4]==extract_int(query_vector[4]),
+        embedding[:,5]==extract_int(query_vector[5])]).T
 
         closest_match = string_matches.sum(axis=1)
 
