@@ -92,7 +92,7 @@ df = pd.DataFrame({
 })
 editable_df = st.data_editor(df, num_rows="dynamic", key="editable_df",use_container_width =True)
 
-if st.button():
+if st.button("go!"):
     kod_adm = [] 
     mapycz_adresa = []
     for i in editable_df['Adresa']:
