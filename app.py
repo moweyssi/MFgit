@@ -114,14 +114,18 @@ if st.button("go!",use_container_width=True):
     else:
         kod_adm = [] 
         mapycz_adresa = []
+        ruian_link = []
         my_bar = st.progress(0, text='Working')
 
         for i in range(len(editable_df['Adresa'])):
             kod, loc = get_match(editable_df['Adresa'][i])
             if kod is None:
                 kod_adm.append(None)
+                ruian_link.append(None)
             else:    
-                kod_adm.append(adm_id[kod])
+                ref = adm_id[kod]
+                kod_adm.append(ref)
+                ruian_link.append('https://vdp.cuzk.cz/vdp/ruian/adresnimista?kodAd='+str(ref))
             mapycz_adresa.append(loc)
 
             # Correct calculation of percent complete
@@ -134,6 +138,7 @@ if st.button("go!",use_container_width=True):
         result_df = pd.DataFrame({
             'Adresa': editable_df['Adresa'],
             'Kod Adresniho Mista RUIAN': kod_adm,
-            'Mapy CZ Adresa': mapycz_adresa
+            'Mapy CZ Adresa': mapycz_adresa,
+            'RUIAN Link':ruian_link
         })
         show_result = st.dataframe(result_df, use_container_width=True)
