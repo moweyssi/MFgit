@@ -5,8 +5,8 @@ import numpy as np
 from io import BytesIO
 
 
-api_key = st.text_input('Mapy.cz API klic:')
-st.write('Info zde: '+'https://developer.mapy.cz/account/projects')
+api_key = st.text_input('Mapy.cz API klíč:')
+st.write('Klíč získáte zde: '+'https://developer.mapy.cz/account/projects')
 def geocode_address(api_key, query, lang='cs', limit=5):
     url = "https://api.mapy.cz/v1/geocode"
     params = {
@@ -100,7 +100,7 @@ def get_match(address):
         return closest_match.argmax(), text_address
 
 # Title of the app
-st.title("Kod Adresniho Mista")
+st.title("Kód Adresního Místa")
 
 # Create an empty DataFrame with three columns and the number of rows selected
 df = pd.DataFrame({
@@ -137,13 +137,13 @@ if st.button("go!",use_container_width=True):
         # Display editable DataFrame
         result_df = pd.DataFrame({
             'Adresa': editable_df['Adresa'],
-            'Kod Adresniho Mista RUIAN': kod_adm,
+            'Kód Adresního Místa RÚIAN': kod_adm,
             'Mapy CZ Adresa': mapycz_adresa,
-            'RUIAN Link':ruian_link
+            'RÚIAN':ruian_link
         })
         show_result = st.dataframe(result_df, use_container_width=True,column_config={
-        "RUIAN Link": st.column_config.LinkColumn(
-            "RUIAN Link",
-            display_text=r"RUIAN"
+        "RÚIAN": st.column_config.LinkColumn(
+            "RÚIAN",
+            display_text=r"RÚIAN"
         )})
         
