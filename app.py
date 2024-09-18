@@ -29,6 +29,8 @@ def get_address(address_string):
 
     if not response['items']:
         return None
+    if not response:
+        return None
 
     first_item = response['items'][0]
     
