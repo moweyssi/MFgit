@@ -89,14 +89,19 @@ num_rows = st.number_input('Set the number of rows', min_value=1, max_value=100,
 df = pd.DataFrame({
     'Adresa': [None] * num_rows
 })
-
-# Display editable DataFrame
 editable_df = st.data_editor(df, num_rows="dynamic", key="editable_df",use_container_width =True)
-result_df = pd.DataFrame({
-    'Adresa': editable_df['Adresa'],
-    'Kod Adresniho Mista RUIAN': editable_df['Adresa'],
-    'Mapy CZ Adresa': editable_df['Adresa']
-})
-result_df['Kod Adresniho Mista RUIAN'], result_df['Mapy CZ Adresa'] = result_df['Adresa'].apply(get_match)
 
-show_result = st.dataframe(result_df,use_container_width =True)
+if st.button():
+    kod_adm = [] 
+    mapycz_adresa = []
+    for i in editable_df['Adresa']:
+        kod, loc = get_match(i)
+        kod_adm.append(kod)
+        mapycz_adresa.append(loc)
+    # Display editable DataFrame
+    result_df = pd.DataFrame({
+        'Adresa': editable_df['Adresa'],
+        'Kod Adresniho Mista RUIAN': kod_adm,
+        'Mapy CZ Adresa': mapycz_adresa
+    })
+    show_result = st.dataframe(result_df,use_container_width =True)
