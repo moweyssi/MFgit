@@ -82,6 +82,7 @@ def extract_int(s):
     return int(numeric_part)
 def get_match(address):
     query = get_address(address)
+    st.text(query)
     if query==None:
         return None,None
     else:
