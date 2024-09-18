@@ -97,7 +97,8 @@ if st.button("go!"):
             kod, loc = get_match(editable_df['Adresa'][i])
             kod_adm.append(kod)
             mapycz_adresa.append(loc)
-            my_bar.progress(i + 1, text='Working')
+            percent_complete = i/len(editable_df['Adresa'])
+            my_bar.progress(len(editable_df['Adresa']) + 1, text='Working')
         # Display editable DataFrame
         result_df = pd.DataFrame({
             'Adresa': editable_df['Adresa'],
