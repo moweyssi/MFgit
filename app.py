@@ -145,5 +145,5 @@ if st.button("go!",use_container_width=True):
         "RUIAN Link": st.column_config.LinkColumn(
             "RUIAN Link",
             display_text=r"RUIAN"
-        ))
+        )})
         
