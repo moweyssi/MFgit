@@ -86,7 +86,7 @@ df = pd.DataFrame({
 })
 editable_df = st.data_editor(df, num_rows="dynamic", key="editable_df",use_container_width =True)
 
-if st.button("go!"):
+if st.button("go!",use_container_width=True):
     if api_key is None:
         st.warning("You must provide an API key!")
     else:
