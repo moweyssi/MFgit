@@ -87,22 +87,28 @@ df = pd.DataFrame({
 editable_df = st.data_editor(df, num_rows="dynamic", key="editable_df",use_container_width =True)
 
 if st.button("go!"):
-    if api_key==None:
+    if api_key is None:
         st.warning("You must provide an API key!")
     else:
         kod_adm = [] 
         mapycz_adresa = []
         my_bar = st.progress(0, text='Working')
+
         for i in range(len(editable_df['Adresa'])):
             kod, loc = get_match(editable_df['Adresa'][i])
             kod_adm.append(kod)
             mapycz_adresa.append(loc)
-            percent_complete = i/len(editable_df['Adresa'])
-            my_bar.progress(len(editable_df['Adresa']) + 1, text='Working')
+
+            # Correct calculation of percent complete
+            percent_complete = (i + 1) / len(editable_df['Adresa']) 
+            
+            # Update progress bar correctly
+            my_bar.progress(percent_complete, text=f'Working ({int(percent_complete * 100)}%)')
+
         # Display editable DataFrame
         result_df = pd.DataFrame({
             'Adresa': editable_df['Adresa'],
             'Kod Adresniho Mista RUIAN': kod_adm,
             'Mapy CZ Adresa': mapycz_adresa
         })
-        show_result = st.dataframe(result_df,use_container_width =True)
+        show_result = st.dataframe(result_df, use_container_width=True)
