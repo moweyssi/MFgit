@@ -116,7 +116,7 @@ if st.button("A jedem!",use_container_width=True):
         kod_adm = [] 
         mapycz_adresa = []
         ruian_link = []
-        my_bar = st.progress(0, text='Working')
+        my_bar = st.progress(0, text='Dělám na tom...')
 
         for i in range(len(editable_df['Adresa'])):
             kod, loc = get_match(editable_df['Adresa'][i])
@@ -133,7 +133,7 @@ if st.button("A jedem!",use_container_width=True):
             percent_complete = (i + 1) / len(editable_df['Adresa']) 
             
             # Update progress bar correctly
-            my_bar.progress(percent_complete, text=f'Working ({int(percent_complete * 100)}%)')
+            my_bar.progress(percent_complete, text=f'Dělám na tom... ({int(percent_complete * 100)}%)')
 
         # Display editable DataFrame
         result_df = pd.DataFrame({
