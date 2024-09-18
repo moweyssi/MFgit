@@ -101,6 +101,7 @@ def get_match(address):
 
 # Title of the app
 st.title("Kód Adresního Místa")
+st.text("Do tabulky se dá kopírovat sloupec rovnou z Excelu :)")
 
 # Create an empty DataFrame with three columns and the number of rows selected
 df = pd.DataFrame({
