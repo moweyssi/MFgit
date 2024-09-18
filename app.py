@@ -52,7 +52,7 @@ def get_address(address_string):
     nazev_obce = address_components.get('regional.municipality', '')
 
     # Handle missing zip code (if it exists in the item)
-    psc = first_item.get('zip', '').replace(' ', '')
+    psc = first_item.get('zip', '').replace(' ', -1)
 
     # Construct the text address, only including available components
     text_address = ', '.join(filter(None, [nazev_ulice, '/'.join([str(cislo_domovni), str(cislo_orientacni)]), nazev_obce, nazev_casti_obce, psc]))
