@@ -117,7 +117,10 @@ if st.button("go!",use_container_width=True):
 
         for i in range(len(editable_df['Adresa'])):
             kod, loc = get_match(editable_df['Adresa'][i])
-            kod_adm.append(adm_id[kod])
+            if kod is None:
+                kod_adm.append(None)
+            else:    
+                kod_adm.append(adm_id[kod])
             mapycz_adresa.append(loc)
 
             # Correct calculation of percent complete
