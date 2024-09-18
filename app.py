@@ -27,7 +27,7 @@ def geocode_address(api_key, query, lang='cs', limit=5):
 def get_address(address_string):
     response = geocode_address(api_key,address_string)
     st.text(response)
-    text_address = response['items'][0]['name']
+    text_address = "gugu gaga"#response['items'][0]['name']
     regional_address = response['items'][0]['regionalStructure'][0]['name'].split('/')
     # Check if the split resulted in exactly two parts
     if len(regional_address) == 2:
