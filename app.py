@@ -55,7 +55,7 @@ def get_address(address_string):
     psc = first_item.get('zip', '0').replace(' ', '') or '0'
 
     # Construct the text address, only including available components
-    text_address = ', '.join(filter(None, [nazev_ulice, '/'.join([cislo_domovni, str(cislo_orientacni)]), nazev_obce, nazev_casti_obce, psc]))
+    text_address = ', '.join(filter(None, [nazev_ulice, '/'.join([str(cislo_domovni), str(cislo_orientacni)]), nazev_obce, nazev_casti_obce, psc]))
 
     # Construct the query vector
     query_vector = np.array([nazev_obce, nazev_casti_obce, nazev_ulice, cislo_domovni, cislo_orientacni, psc])
