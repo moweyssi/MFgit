@@ -144,6 +144,8 @@ if st.button("A jedem!",use_container_width=True):
             'Mapy CZ Adresa': mapycz_adresa,
             'RÚIAN':ruian_link
         })
+        st.text("Pozor! Výsledky nemají 100% přesnost, vždy je ověř.")
+        st.text("Některé budovy mají několik adresních míst... Bohužel.")
         show_result = st.dataframe(result_df, use_container_width=True,column_config={
         "RÚIAN": st.column_config.LinkColumn(
             "RÚIAN",
